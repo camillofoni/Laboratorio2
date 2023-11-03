@@ -11,6 +11,11 @@
             std::cout << "\n\tParticle name not found\n";
     }
 */
+Particle::Particle(){
+  fPx=0;
+  fPy=0;
+  fPz=0;
+}
 
 Particle::Particle(const char *name, double px, double py, double pz) : fPx(px), fPy(py), fPz(pz)
 {
@@ -140,7 +145,7 @@ int Particle::fNParticleType = 0;
 
 void Particle::PrintArray()
 {
-  for (int i = 0; i < fNParticleType; i++)
+  for (int i = 0; i < fNParticleType; ++i)
   {
     std::cout << "\n\n\t"
               << i;
