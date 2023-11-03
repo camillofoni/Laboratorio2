@@ -3,7 +3,7 @@
 #include "resonancetype.hpp"
 
 ResonanceType::ResonanceType(const char *name, double mass, int charge, double width) : fWidth(width), ParticleType(name, mass, charge) {}
-const double ResonanceType::GetWidth() const { return fWidth; }
+double ResonanceType::GetWidth() const { return fWidth; }
 
 void ResonanceType::Print() const
 {
