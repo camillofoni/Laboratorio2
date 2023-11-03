@@ -18,8 +18,8 @@ int main()
     for (int i = 0; i < 1e5; ++i)
     {
         Double_t type = gRandom->Rndm();
-        Double_t phi = gRandom->Uniform(0, 2 * TMath::Pi());
-        Double_t theta = gRandom->Uniform(0, TMath::Pi());
+        Double_t phi = gRandom->Uniform(0, 2 * M_PI);
+        Double_t theta = gRandom->Uniform(0, M_PI);
         Double_t p = gRandom->Exp(1);
 
         if (type < 0.4)
