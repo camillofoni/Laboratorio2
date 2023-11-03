@@ -11,6 +11,11 @@
             std::cout << "\n\tParticle name not found\n";
     }
 */
+Particle::Particle(){
+  fPx=0;
+  fPy=0;
+  fPz=0;
+}
 
 Particle::Particle(const char *name, double px, double py, double pz) : fPx(px), fPy(py), fPz(pz)
 {
@@ -84,11 +89,9 @@ int Particle::Decay2body(Particle &dau1, Particle &dau2) const
   dau1.SetP(pout * sin(theta) * cos(phi), pout * sin(theta) * sin(phi), pout * cos(theta));
   dau2.SetP(-pout * sin(theta) * cos(phi), -pout * sin(theta) * sin(phi), -pout * cos(theta));
 
-  double energy = sqrt(fPx * fPx + fPy * fPy + fPz * fPz + massMot * massMot);
-
-  double bx = fPx / energy;
-  double by = fPy / energy;
-  double bz = fPz / energy;
+  double bx = fPx / GetEnergy();
+  double by = fPy / GetEnergy();
+  double bz = fPz / GetEnergy();
 
   dau1.Boost(bx, by, bz);
   dau2.Boost(bx, by, bz);
@@ -140,7 +143,7 @@ int Particle::fNParticleType = 0;
 
 void Particle::PrintArray()
 {
-  for (int i = 0; i < fNParticleType; i++)
+  for (int i = 0; i < fNParticleType; ++i)
   {
     std::cout << "\n\n\t"
               << i;

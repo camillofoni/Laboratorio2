@@ -6,6 +6,7 @@ class Particle
 {
 public:
     // Particle(const char *name);
+    Particle();
     Particle(const char *name, double px = 0, double py = 0, double pz = 0);
 
     const int GetIndex() const;
