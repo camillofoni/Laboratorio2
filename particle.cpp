@@ -89,11 +89,9 @@ int Particle::Decay2body(Particle &dau1, Particle &dau2) const
   dau1.SetP(pout * sin(theta) * cos(phi), pout * sin(theta) * sin(phi), pout * cos(theta));
   dau2.SetP(-pout * sin(theta) * cos(phi), -pout * sin(theta) * sin(phi), -pout * cos(theta));
 
-  double energy = sqrt(fPx * fPx + fPy * fPy + fPz * fPz + massMot * massMot);
-
-  double bx = fPx / energy;
-  double by = fPy / energy;
-  double bz = fPz / energy;
+  double bx = fPx / GetEnergy();
+  double by = fPy / GetEnergy();
+  double bz = fPz / GetEnergy();
 
   dau1.Boost(bx, by, bz);
   dau2.Boost(bx, by, bz);
