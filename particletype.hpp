@@ -9,7 +9,7 @@ public:
     const char *GetName() const;
     const double GetMass() const;
     const int GetCharge() const;
-    virtual int ParticleType::GetWidth() const;
+    virtual double GetWidth() const;
 
     virtual void Print() const;
 
