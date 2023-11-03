@@ -17,4 +17,4 @@ void ParticleType::Print() const
 const char *ParticleType::GetName() const { return fName; }
 const double ParticleType::GetMass() const { return fMass; }
 const int ParticleType::GetCharge() const { return fCharge; }
-double ParticleType::GetWidth() const { return 0; }
+const double ParticleType::GetWidth() const { return 0; }
