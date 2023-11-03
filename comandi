@@ -1,0 +1,10 @@
+git remote -v
+git remote set-url origin "indirizzo SSH"
+   L'indirizzo SSH è sulla repository cliccando code
+ssh-keygen -t ed25519
+   e poi creare una password
+cat $HOME/.ssh/id_ed25519
+sudo apt install tig
+eval $(ssh-agent)
+ssh-add $HOME/.ssh/id_ed25519.pub
+
