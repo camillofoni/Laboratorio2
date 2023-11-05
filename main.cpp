@@ -77,12 +77,12 @@ int main()
                 decaycounter++;
             }
             EventParticles[i].SetP(p * sin(theta) * cos(phi), p * sin(theta) * sin(phi), p * cos(theta));
-            h1->Fill(EventParticles[i]->GetIndex());
+            h1->Fill(EventParticles[i].GetIndex());
             h2->Fill(phi);
             h3->Fill(theta);
             h4->Fill(p);
             h5->Fill(p*sin(theta));
-            h6->Fill(EventParticles[i]->GetEnergy());
+            h6->Fill(EventParticles[i].GetEnergy());
         }
     }
      
