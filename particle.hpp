@@ -26,7 +26,7 @@ public:
 
     void ParticleInfo() const;
 
-    int Decay2body(Particle &dau1,Particle &dau2) const;
+    int Decay2body(Particle &dau1, Particle &dau2) const;
 
 private:
     static const int MaxNumParticleType = 10;
