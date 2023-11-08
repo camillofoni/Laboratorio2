@@ -13,6 +13,7 @@
 */
 Particle::Particle()
 {
+  fIndex = -1;
   fPx = 0;
   fPy = 0;
   fPz = 0;
@@ -38,7 +39,11 @@ void Particle::SetP(double px, double py, double pz)
   fPy = py;
   fPz = pz;
 }
-double Particle::GetMass() const { return fParticleType[fIndex]->GetMass(); }
+double Particle::GetMass() const
+{
+  if (fIndex >= 0)
+    return fParticleType[fIndex]->GetMass();
+}
 double Particle::GetEnergy() const { return sqrt(GetMass() * GetMass() + GetPx() * GetPx() + GetPy() * GetPy() + GetPz() * GetPz()); }
 double Particle::InvMass(Particle &p) const { return sqrt(pow(GetEnergy() + p.GetEnergy(), 2) - (pow(GetPx() + p.GetPx(), 2) + pow(GetPy() + p.GetPy(), 2) + pow(GetPz() + p.GetPz(), 2))); }
 

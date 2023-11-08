@@ -93,7 +93,7 @@ int main()
             h5->Fill(p * sin(theta));
             h6->Fill(EventParticles[i].GetEnergy());
         }
-        for (i = 0; i < sizeof(EventParticles); ++i)
+        for (i = 0; EventParticles[i].GetIndex() != -1; ++i)
         {
             for (int k = 0; k < i; ++k) // fuori dal ciclo di generazione per avere l'array già pieno, forse si può implementare meglio
             {                           // per calcolare la massa inv. tra le part. i e k solo una volta
@@ -111,6 +111,7 @@ int main()
                         h11->Fill(EventParticles[i].InvMass(EventParticles[k]));
                 }
             }
+            EventParticles[i] = Particle();
         }
     }
     prova->cd(1);
