@@ -16,7 +16,8 @@ int main()
 
     const int N = 120;
     Particle EventParticles[N];
-    int eventParticlesSize = 0;
+    int eventParticlesSize;
+    int decaycounter;
 
     //TCanvas *prova = new TCanvas("prova", "Istogrammi fino ad ora");
     //prova->Divide(3, 4);
@@ -29,21 +30,24 @@ int main()
     TH1F *h6 = new TH1F("h6", "Distribuzione della energia delle particelle", 500, 0, 7);
     TH1F *h7 = new TH1F("h7", "Massa invariante fra tutte le particelle generate", 500, 0, 5); // range e numero bin da decidere
     TH1F *h8 = new TH1F("h8", "Massa invariante particelle segno discorde", 500, 0, 5);        // range e numero bin da decidere
+    h8->Sumw2();
     TH1F *h9 = new TH1F("h9", "Massa invariante particelle segno concorde", 500, 0, 5);        // range e numero bin da decidere
+    h9->Sumw2();
     TH1F *h10 = new TH1F("h10", "Massa invariante pioni kaoni segno discorde", 500, 0, 5);     // range e numero bin da decidere
-    TH1F *h11 = new TH1F("h11", "Massa invariante pioni kaoni segno concorde", 500, 0, 5);     // range e numero bin da decidere
+    h10->Sumw2();
+    TH1F *h11 = new TH1F("h11", "Massa invariante pioni kaoni segno concorde", 500, 0, 5);// range e numero bin da decidere
+    h11->Sumw2();
     TH1F *h12 = new TH1F("h12", "Massa invariante per k*", 500, 0.6, 1.2);
-    h12->Sumw2();
-    for (int j = 0; j < 1e5; ++j, eventParticlesSize = 0)
-    {
+    for (int j = 0; j < 1e5; ++j)
+    {   eventParticlesSize = 0;
         int i;
+        decaycounter = 0;
         for (i = 0; i < 100; ++i)
         {   ++eventParticlesSize;
             Double_t type = gRandom->Rndm();
             Double_t phi = gRandom->Uniform(0, 2 * M_PI);
             Double_t theta = gRandom->Uniform(0, M_PI);
             Double_t p = gRandom->Exp(1);
-            int decaycounter = 0;
             if (type < 0.4) // pioni+
             {
                 EventParticles[i].SetIndex(0);
@@ -86,7 +90,8 @@ int main()
                 }
                 EventParticles[i].Decay2body(EventParticles[100 + decaycounter], EventParticles[101 + decaycounter]);
                 h12->Fill(EventParticles[100 + decaycounter].InvMass(EventParticles[101 + decaycounter]));
-                decaycounter++;
+                ++decaycounter;
+                ++decaycounter;
             }
             EventParticles[i].SetP(p * sin(theta) * cos(phi), p * sin(theta) * sin(phi), p * cos(theta));
             h1->Fill(EventParticles[i].GetIndex());
@@ -97,9 +102,9 @@ int main()
             h6->Fill(EventParticles[i].GetEnergy());
         }
         for (i = 0; i < eventParticlesSize ; ++i)
-        { if (EventParticles[i] != 6){
-            for (int k = 0; k < i && EventParticles[k].GetIndex() != 6; ++k) // fuori dal ciclo di generazione per avere l'array già pieno, forse si può implementare meglio
-            {   if (EventParticles[k] != 6){                        // per calcolare la massa inv. tra le part. i e k solo una volta
+        { if (EventParticles[i].GetIndex() != 6){
+            for (int k = 0; k < i; ++k) // fuori dal ciclo di generazione per avere l'array già pieno, forse si può implementare meglio
+            {   if (EventParticles[k].GetIndex() != 6){                        // per calcolare la massa inv. tra le part. i e k solo una volta
                 h7->Fill(EventParticles[i].InvMass(EventParticles[k]));
                 if ((EventParticles[i].GetIndex() % 2 == 1 && EventParticles[k].GetIndex() % 2 == 0) || (EventParticles[i].GetIndex() % 2 == 0 && EventParticles[k].GetIndex() % 2 == 1)) // particelle di segno discorde usando l'indice, si può implementare meglio con GetCharge()
                 {
@@ -107,7 +112,7 @@ int main()
                     if (EventParticles[i].GetIndex() <= 3 && EventParticles[k].GetIndex() <= 3 && EventParticles[i].GetMass() != EventParticles[k].GetMass()) // verifico che si tratti di un pione e un kaone, so già che hanno segno discorde
                         h10->Fill(EventParticles[i].InvMass(EventParticles[k]));
                 }
-                if ((EventParticles[i].GetIndex() % 2 == 0 && EventParticles[k].GetIndex() % 2 == 0) || (EventParticles[i].GetIndex() % 2 == 1 && EventParticles[k].GetIndex() % 2 == 1)) // particelle di segno concorde usando l'indice, si può implementare meglio con GetCharge()
+                else if ((EventParticles[i].GetIndex() % 2 == 0 && EventParticles[k].GetIndex() % 2 == 0) || (EventParticles[i].GetIndex() % 2 == 1 && EventParticles[k].GetIndex() % 2 == 1)) // particelle di segno concorde usando l'indice, si può implementare meglio con GetCharge()
                 {
                     h9->Fill(EventParticles[i].InvMass(EventParticles[k]));
                     if (EventParticles[i].GetIndex() <= 3 && EventParticles[k].GetIndex() <= 3 && EventParticles[i].GetMass() != EventParticles[k].GetMass()) // verifico che si tratti di un pione e un kaone, so già che hanno segno concorde
@@ -115,7 +120,7 @@ int main()
                 }
               }
             }
-            EventParticles[i] = Particle();
+           //       EventParticles[i] = Particle();
           }   
         }
     }
@@ -157,4 +162,5 @@ int main()
     h11->Draw();
     prova->cd(12);
     h12->Draw();*/
+    
 }
