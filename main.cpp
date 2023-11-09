@@ -96,10 +96,10 @@ int main()
             h5->Fill(p * sin(theta));
             h6->Fill(EventParticles[i].GetEnergy());
         }
-        for (i = 0; i < eventParticlesSize && EventParticles[i].GetIndex() != 6; ++i)
-        {
+        for (i = 0; i < eventParticlesSize ; ++i)
+        { if (EventParticles[i] != 6){
             for (int k = 0; k < i && EventParticles[k].GetIndex() != 6; ++k) // fuori dal ciclo di generazione per avere l'array già pieno, forse si può implementare meglio
-            {                           // per calcolare la massa inv. tra le part. i e k solo una volta
+            {   if (EventParticles[k] != 6){                        // per calcolare la massa inv. tra le part. i e k solo una volta
                 h7->Fill(EventParticles[i].InvMass(EventParticles[k]));
                 if ((EventParticles[i].GetIndex() % 2 == 1 && EventParticles[k].GetIndex() % 2 == 0) || (EventParticles[i].GetIndex() % 2 == 0 && EventParticles[k].GetIndex() % 2 == 1)) // particelle di segno discorde usando l'indice, si può implementare meglio con GetCharge()
                 {
@@ -113,8 +113,10 @@ int main()
                     if (EventParticles[i].GetIndex() <= 3 && EventParticles[k].GetIndex() <= 3 && EventParticles[i].GetMass() != EventParticles[k].GetMass()) // verifico che si tratti di un pione e un kaone, so già che hanno segno concorde
                         h11->Fill(EventParticles[i].InvMass(EventParticles[k]));
                 }
+              }
             }
             EventParticles[i] = Particle();
+          }   
         }
     }
     TFile *Laboratorio2 = new TFile("Laboratorio2.root", "RECREATE");
