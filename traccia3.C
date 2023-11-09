@@ -155,24 +155,7 @@ void traccia3() {
   gaussian1->Draw("SAME");
 
 /*punto 12
-  c1->Print("c1.pdf");
-  c1->Print("c1.C");
-  c1->Print("c1.root");
-  c2->Print("c2.pdf");
-  c2->Print("c2.C");
-  c2->Print("c2.root");
-  c3->Print("c3.pdf");
-  c3->Print("c3.C");
-  c3->Print("c3.root");
-  c4->Print("c4.pdf");
-  c4->Print("c4.C");
-  c4->Print("c4.root");
-  c5->Print("c5.pdf");
-  c5->Print("c5.C");
-  c5->Print("c5.root");
-  c6->Print("c6.pdf");
-  c6->Print("c6.C");
-  c6->Print("c6.root");
+
   c7->Print("c7.pdf");
   c7->Print("c7.C");
   c7->Print("c7.root");
