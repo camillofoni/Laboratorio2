@@ -1,3 +1,4 @@
+#include <cmath>
 #include <iostream>
 
 void traccia3() {
@@ -57,6 +58,7 @@ void traccia3() {
     std::cout << "Entries dell'istogramma h" << i + 1 << " = "
               << histo[i]->GetEntries() << std::endl;
   }
+
   // punto 10.2
   std::cout << "Pione+ generati = " << histo[0]->GetBinContent(1) << " +- "
             << histo[0]->GetBinError(1) << std::endl;
@@ -101,7 +103,6 @@ void traccia3() {
             << " Probabilità del fit = " << f3expo->GetProb() << std::endl;
   for (int i = 0; i < 12; ++i) {
     canvas[i]->cd();
-    histo[i]->Draw();
     histo[i]->DrawCopy();
   }
   c2->cd();
@@ -113,20 +114,14 @@ void traccia3() {
 
   // punto 11
   TCanvas *c13 = new TCanvas("c13", "Istogrammi fino ad ora 13");
-  TH1F *h13 = new TH1F("h13", "Sottrazione di h9 a h8", 500, 0, 5);
-  h13->Add(h8, h9, 1, -1);
-  c13->cd();
-  h13->Draw();
-  h13->DrawCopy();
   TCanvas *c14 = new TCanvas("c14", "Istogrammi fino ad ora 14");
+  TH1F *h13 = new TH1F("h13", "Sottrazione di h9 a h8", 500, 0, 5);
   TH1F *h14 = new TH1F("h14", "Sottrazione di h11 a h10", 500, 0, 5);
-  h14->Add(h10, h11, 1, -1);
-  c14->cd();
-  h14->Draw();
-  h14->DrawCopy();
   TF1 *gaussian1 =
       new TF1("gaussian1", "[0]*exp((-0.5*((x-[1])/[2])*(x-[1])/[2]))");
   gaussian1->SetParameters(1000, 0.89, 0.050);
+  c13->cd();
+  h13->Add(h8, h9, 1, -1);
   h13->Fit("gaussian1");
   std::cout << "fit di h13: " << std::endl
             << "Primo parametro (picco della distribuzione) = "
@@ -138,8 +133,10 @@ void traccia3() {
             << " Chi quadro ridotto = "
             << f3expo->GetChisquare() / f3expo->GetNDF()
             << " Probabilità del fit = " << f3expo->GetProb() << std::endl;
-  c13->cd();
+  h13->DrawCopy();
   gaussian1->Draw("SAME");
+  c14->cd();
+  h14->Add(h10, h11, 1, -1);
   h14->Fit("gaussian1");
   std::cout << "fit di h14: " << std::endl
             << "Primo parametro (picco della distribuzione) = "
@@ -149,48 +146,30 @@ void traccia3() {
             << " Terzo parametro (Deviazione standard) = "
             << gaussian1->GetParameter(2) << " +-" << gaussian1->GetParameter(2)
             << " Chi quadro ridotto = "
-            << f3expo->GetChisquare() / f3expo->GetNDF()
-            << " Probabilità del fit = " << f3expo->GetProb() << std::endl;
-  c14->cd();
+            << gaussian1->GetChisquare() / gaussian1->GetNDF()
+            << " Probabilità del fit = " << gaussian1->GetProb() << std::endl;
+  h14->DrawCopy();
   gaussian1->Draw("SAME");
-
-/*punto 12
-  c1->Print("c1.pdf");
-  c1->Print("c1.C");
-  c1->Print("c1.root");
-  c2->Print("c2.pdf");
-  c2->Print("c2.C");
-  c2->Print("c2.root");
-  c3->Print("c3.pdf");
-  c3->Print("c3.C");
-  c3->Print("c3.root");
-  c4->Print("c4.pdf");
-  c4->Print("c4.C");
-  c4->Print("c4.root");
-  c5->Print("c5.pdf");
-  c5->Print("c5.C");
-  c5->Print("c5.root");
-  c6->Print("c6.pdf");
-  c6->Print("c6.C");
-  c6->Print("c6.root");
-  c7->Print("c7.pdf");
-  c7->Print("c7.C");
-  c7->Print("c7.root");
-  c8->Print("c8.pdf");
-  c8->Print("c8.C");
-  c8->Print("c8.root");
-  c9->Print("c9.pdf");
-  c9->Print("c9.C");
-  c9->Print("c9.root");
-  c10->Print("c10.pdf");
-  c10->Print("c10.C");
-  c10->Print("c10.root");
-  c11->Print("c11.pdf");
-  c11->Print("c11.C");
-  c11->Print("c11.root");
-  c12->Print("c12.pdf");
-  c12->Print("c12.C");
-  c12->Print("c12.root");*/
-
-  Laboratorio2->Close();
+  
+  
+  /*punto 12
+    c7->Print("c7.pdf");
+    c7->Print("c7.C");
+    c7->Print("c7.root");
+    c8->Print("c8.pdf");
+    c8->Print("c8.C");
+    c8->Print("c8.root");
+    c9->Print("c9.pdf");
+    c9->Print("c9.C");
+    c9->Print("c9.root");
+    c10->Print("c10.pdf");
+    c10->Print("c10.C");
+    c10->Print("c10.root");
+    c11->Print("c11.pdf");
+    c11->Print("c11.C");
+    c11->Print("c11.root");
+    c12->Print("c12.pdf");
+    c12->Print("c12.C");
+    c12->Print("c12.root");*/
+    
 }
