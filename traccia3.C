@@ -81,9 +81,9 @@ void traccia3() {
   f1uniform->SetParameter(0, 10000);
   f2uniform->SetParameter(0, 10000);
   f3expo->SetParameters(140000, 0);
-  h2->Fit(f1uniform);
-  h3->Fit(f2uniform);
-  h4->Fit(f3expo);
+  h2->Fit(f1uniform, "Q");
+  h3->Fit(f2uniform, "Q");
+  h4->Fit(f3expo, "Q");
   std::cout << "fit su h2: " << std::endl
             << "Primo parametro = " << f1uniform->GetParameter(0) << " +- "
             << f1uniform->GetParError(0) << " Chi quadro ridotto = "
@@ -103,7 +103,7 @@ void traccia3() {
             << " Probabilità del fit = " << f3expo->GetProb() << std::endl;
   for (int i = 0; i < 12; ++i) {
     canvas[i]->cd();
-    histo[i]->DrawCopy();
+    histo[i]->DrawCopy("hist");
   }
   c2->cd();
   f1uniform->Draw("SAME");
@@ -115,21 +115,21 @@ void traccia3() {
   // punto 11
   TCanvas *c13 = new TCanvas("c13", "Istogrammi fino ad ora 13");
   TCanvas *c14 = new TCanvas("c14", "Istogrammi fino ad ora 14");
-  TH1F *h13 = new TH1F("h13", "Sottrazione di h9 a h8", 500, 0, 5);
-  TH1F *h14 = new TH1F("h14", "Sottrazione di h11 a h10", 500, 0, 5);
+  TH1F *h13 = new TH1F("h13", "Sottrazione di h9 a h8", 500, 0, 6);
+  TH1F *h14 = new TH1F("h14", "Sottrazione di h11 a h10", 500, 0, 6);
   TF1 *gaussian1 =
       new TF1("gaussian1", "[0]*exp((-0.5*((x-[1])/[2])*(x-[1])/[2]))");
   gaussian1->SetParameters(1000, 0.89, 0.050);
   c13->cd();
   h13->Add(h8, h9, 1, -1);
-  h13->Fit("gaussian1");
+  h13->Fit("gaussian1", "Q");
   std::cout << "fit di h13: " << std::endl
             << "Primo parametro (picco della distribuzione) = "
             << gaussian1->GetParameter(0) << " +- " << gaussian1->GetParError(0)
             << " Secondo parametro (media) = " << gaussian1->GetParameter(1)
             << " +- " << gaussian1->GetParError(1)
             << " Terzo parametro (Deviazione standard) = "
-            << gaussian1->GetParameter(2) << " +-" << gaussian1->GetParameter(2)
+            << gaussian1->GetParameter(2) << " +-" << gaussian1->GetParError(2)
             << " Chi quadro ridotto = "
             << f3expo->GetChisquare() / f3expo->GetNDF()
             << " Probabilità del fit = " << f3expo->GetProb() << std::endl;
@@ -137,44 +137,20 @@ void traccia3() {
   gaussian1->Draw("SAME");
   c14->cd();
   h14->Add(h10, h11, 1, -1);
-  h14->Fit("gaussian1");
+  h14->Fit("gaussian1", "Q");
   std::cout << "fit di h14: " << std::endl
             << "Primo parametro (picco della distribuzione) = "
             << gaussian1->GetParameter(0) << " +- " << gaussian1->GetParError(0)
             << " Secondo parametro (media) = " << gaussian1->GetParameter(1)
             << " +- " << gaussian1->GetParError(1)
             << " Terzo parametro (Deviazione standard) = "
-            << gaussian1->GetParameter(2) << " +-" << gaussian1->GetParameter(2)
+            << gaussian1->GetParameter(2) << " +-" << gaussian1->GetParError(2)
             << " Chi quadro ridotto = "
             << gaussian1->GetChisquare() / gaussian1->GetNDF()
             << " Probabilità del fit = " << gaussian1->GetProb() << std::endl;
   h14->DrawCopy();
   gaussian1->Draw("SAME");
-<<<<<<< HEAD
-  
-  
-  /*punto 12
-    c7->Print("c7.pdf");
-    c7->Print("c7.C");
-    c7->Print("c7.root");
-    c8->Print("c8.pdf");
-    c8->Print("c8.C");
-    c8->Print("c8.root");
-    c9->Print("c9.pdf");
-    c9->Print("c9.C");
-    c9->Print("c9.root");
-    c10->Print("c10.pdf");
-    c10->Print("c10.C");
-    c10->Print("c10.root");
-    c11->Print("c11.pdf");
-    c11->Print("c11.C");
-    c11->Print("c11.root");
-    c12->Print("c12.pdf");
-    c12->Print("c12.C");
-    c12->Print("c12.root");*/
-    
-=======
-
+                
 /*punto 12
 
   c7->Print("c7.pdf");
@@ -197,5 +173,4 @@ void traccia3() {
   c12->Print("c12.root");*/
 
   Laboratorio2->Close();
->>>>>>> fe4303c4e51a4c15931933c85d6faa236e469682
 }
