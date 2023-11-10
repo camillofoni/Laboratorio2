@@ -6,6 +6,7 @@ class Particle
 {
 public:
     // Particle(const char *name);
+    Particle();
     Particle(const char *name, double px = 0, double py = 0, double pz = 0);
 
     const int GetIndex() const;
@@ -25,7 +26,7 @@ public:
 
     void ParticleInfo() const;
 
-    int Decay2body(Particle &dau1,Particle &dau2) const;
+    int Decay2body(Particle &dau1, Particle &dau2) const;
 
 private:
     static const int MaxNumParticleType = 10;

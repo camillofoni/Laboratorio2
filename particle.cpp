@@ -11,6 +11,13 @@
             std::cout << "\n\tParticle name not found\n";
     }
 */
+Particle::Particle()
+{
+  fIndex = -1;
+  fPx = 0;
+  fPy = 0;
+  fPz = 0;
+}
 
 Particle::Particle(const char *name, double px, double py, double pz) : fPx(px), fPy(py), fPz(pz)
 {
@@ -32,7 +39,11 @@ void Particle::SetP(double px, double py, double pz)
   fPy = py;
   fPz = pz;
 }
-double Particle::GetMass() const { return fParticleType[fIndex]->GetMass(); }
+double Particle::GetMass() const
+{
+  if (fIndex >= 0)
+    return fParticleType[fIndex]->GetMass();
+}
 double Particle::GetEnergy() const { return sqrt(GetMass() * GetMass() + GetPx() * GetPx() + GetPy() * GetPy() + GetPz() * GetPz()); }
 double Particle::InvMass(Particle &p) const { return sqrt(pow(GetEnergy() + p.GetEnergy(), 2) - (pow(GetPx() + p.GetPx(), 2) + pow(GetPy() + p.GetPy(), 2) + pow(GetPz() + p.GetPz(), 2))); }
 
@@ -84,11 +95,9 @@ int Particle::Decay2body(Particle &dau1, Particle &dau2) const
   dau1.SetP(pout * sin(theta) * cos(phi), pout * sin(theta) * sin(phi), pout * cos(theta));
   dau2.SetP(-pout * sin(theta) * cos(phi), -pout * sin(theta) * sin(phi), -pout * cos(theta));
 
-  double energy = sqrt(fPx * fPx + fPy * fPy + fPz * fPz + massMot * massMot);
-
-  double bx = fPx / energy;
-  double by = fPy / energy;
-  double bz = fPz / energy;
+  double bx = fPx / GetEnergy();
+  double by = fPy / GetEnergy();
+  double bz = fPz / GetEnergy();
 
   dau1.Boost(bx, by, bz);
   dau2.Boost(bx, by, bz);
@@ -140,7 +149,7 @@ int Particle::fNParticleType = 0;
 
 void Particle::PrintArray()
 {
-  for (int i = 0; i < fNParticleType; i++)
+  for (int i = 0; i < fNParticleType; ++i)
   {
     std::cout << "\n\n\t"
               << i;
