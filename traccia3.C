@@ -154,5 +154,27 @@ void traccia3()
   h14->DrawCopy();
   gaussian1->Draw("SAME");
 
+/*punto 12
+
+ c7->Print("c7.pdf");
+ c7->Print("c7.C");
+ c7->Print("c7.root");
+ c8->Print("c8.pdf");
+ c8->Print("c8.C");
+ c8->Print("c8.root");
+ c9->Print("c9.pdf");
+ c9->Print("c9.C");
+ c9->Print("c9.root");
+ c10->Print("c10.pdf");
+ c10->Print("c10.C");
+ c10->Print("c10.root");
+ c11->Print("c11.pdf");
+ c11->Print("c11.C");
+ c11->Print("c11.root");
+ c12->Print("c12.pdf");
+ c12->Print("c12.C");
+ c12->Print("c12.root");*/
+
   Laboratorio2->Close();
+
 }
